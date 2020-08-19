@@ -1,0 +1,43 @@
+{% extends "products/base.html" %}
+{% block content %}
+<div class="container ml-10">
+      <form class="form-inline my-2 my-lg-0" type="get" action="{% url 'search' %}">
+    <input id="search" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search" >
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</div>
+
+
+
+
+    <div class="row row-flex">
+        {% for card in cards %}
+
+            <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-6 col-md-4 display panel panel-default">
+
+                <div class="panel-body">
+                    <img src="{{ card.image.url }}" class="card-img-top" alt="...">
+
+                  <h2><a class="article-title" href="{% url 'detail_view' card.id %}">{{ card.name }}</a></h2>
+
+                    <p class="text-center">${{ card.price }}</p>
+                    <p class="text-center">IN_STOCK {{ card.in_stock }}</p>
+
+
+
+                       <form method="post" action="{% url 'add_to_cart' card.id %}">
+                           {% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="submit">Add To Cart</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+{% endblock %}
