@@ -1,15 +1,25 @@
-
 from django.contrib import admin
 from django.urls import path, include
 from users import views as users_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from products.views import *
+from rest_framework.routers import DefaultRouter
+from products.views import OrderView
 
-
+router = DefaultRouter()
+router.register(r'article', ArticleView, basename='article')
+#router.register(r'order', OrderView, basename='order')
 
 urlpatterns = [
+    path('api/', include(router.urls)),
+    path('', include('products.urls')),
+   # path('order/', OrderView.as_view(), name='order'),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('rest-auth/', include('rest_auth.urls')),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
     path('products/', include('products.urls')),
     path('register/', users_views.register, name='register'),
     path('profile/', users_views.profile, name='profile'),
