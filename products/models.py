@@ -10,13 +10,10 @@ class Article(models.Model):
     type = models.CharField(max_length=10)
 
     def __str__(self):
-
         return self.name
 
 
-
 class Order(models.Model):
-
     ownwer = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     items = models.ManyToManyField(Article)
 
@@ -25,5 +22,3 @@ class Order(models.Model):
 
     def cart_total(self):
         return sum([item.price for item in self.items.all()])
-
-
