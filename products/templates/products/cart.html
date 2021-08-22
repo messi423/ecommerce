@@ -1,0 +1,54 @@
+{% extends "products/base.html" %}
+{% block content %}
+
+<div class="row">
+
+    <div class="col"></div>
+
+      {% for card in cart_items %}
+
+    <div class="ml-3 mt-3">
+    <div class="card" style="width:18rem;">
+  <img src="{{ card.image.url }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ card.name}}</h5>
+    <small class="text-muted ml-3"> ${{ card.price }}</small>
+
+      <form method="post" action="#">
+                           {% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="submit">Buy Now</button>
+                            </span>
+                        </div>
+                    </form>
+
+       <form method="post" action="{% url 'delete_item' card.id %}">
+                        {% csrf_token %}
+                        <div class=" mt-4">
+                        <div class="input-group">
+
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="submit">Remove Item</button>
+                            </span>
+                        </div>
+                            </div>
+                    </form>
+
+
+  </div>
+</div>
+ </div>
+
+    {% empty %}
+    <h4>Your Bag Is So Light</h4>
+
+  {% endfor %}
+
+
+</div>
+  </div>
+
+
+
+{% endblock %}
